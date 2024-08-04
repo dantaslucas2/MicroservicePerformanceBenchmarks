@@ -1,0 +1,71 @@
+C
+## Prerequisites
+
+Make sure you have the following tools and libraries installed on your system:
+
+- **CMake** (version 3.10 or higher)
+- **C++ Compiler** (compatible with C++11 or higher)
+- **Boost Libraries**
+- **OpenSSL**
+- **WebSocket++**
+
+## Installing Dependencies
+
+To install dependencies, you can use the following commands:
+
+### Linux
+
+```sh
+sudo apt-get update
+sudo apt-get install cmake g++ libboost-system-dev libssl-dev
+sudo apt-get install libwebsocketpp-dev
+```
+
+### Mac
+
+```sh
+brew update
+brew install cmake boost openssl
+brew install websocketpp
+```
+
+### Windows
+
+```sh
+git clone https://github.com/microsoft/vcpkg.git
+cd vcpkg
+.\bootstrap-vcpkg.bat
+.\vcpkg integrate install
+.\vcpkg install boost
+.\vcpkg install openssl
+.\vcpkg install websocketpp
+```
+
+## Building the Project
+
+### 1. Clone the repository:
+```sh
+git clone 
+cd 
+```
+
+### 2. Create a build directory and navigate to it:
+```sh
+mkdir build
+cd build
+```
+
+### 3. Generate build files with CMake:
+```sh
+cmake ..
+```
+
+### 4. Compile the project:
+```sh
+make
+```
+
+### 5. Running the Program:
+```sh
+./main
+```
