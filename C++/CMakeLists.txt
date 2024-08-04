@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(YourProject)
 
-# Definir a versão do C++ (C++11, C++14, C++17, etc)
-set(CMAKE_CXX_STANDARD 11)
+# Definir a versão do C++ (C++17)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # Encontrar e configurar o Boost

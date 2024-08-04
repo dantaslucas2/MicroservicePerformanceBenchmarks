@@ -2,11 +2,13 @@
 #include <websocketpp/client.hpp>
 #include <rapidjson/document.h>
 #include <iostream>
+#include <filesystem>
+#include <chrono>
+#include <list>
+#include <fstream>
 #include "rapidjson/document.h"
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
-#include <chrono>
-#include <list>
 
 typedef websocketpp::config::asio_client::message_type::ptr message_ptr;
 typedef websocketpp::client<websocketpp::config::asio_tls_client> client;
@@ -24,7 +26,7 @@ void Write_in_file(){
 void on_message(client* c, websocketpp::connection_hdl hdl, message_ptr msg) {
     Document doc;
     if (doc.Parse(msg->get_payload().c_str()).HasParseError()) {
-        std::cerr << "Erro ao fazer o parse da mensagem JSON" << std::endl;
+        std::cerr << "Error parse JSON" << std::endl;
     }
     uint64_t u = doc["u"].GetUint64();
     std::string s = doc["s"].GetString();
@@ -39,6 +41,24 @@ void on_message(client* c, websocketpp::connection_hdl hdl, message_ptr msg) {
     std::cout << "B: " << B << std::endl;
     std::cout << "a: " << a << std::endl;
     std::cout << "A: " << A << std::endl;
+
+    namespace fs = std::filesystem;
+    fs::path log_dir = fs::current_path().parent_path().parent_path() / "Logs";
+    fs::create_directories(log_dir);
+    fs::path log_file = log_dir / "log.txt";
+
+    bool file_exists = fs::exists(log_file);
+    std::ofstream logfile(log_file, std::ios_base::app);
+
+    if (logfile.is_open()) {
+        if (!file_exists) {
+            logfile << "u; s; b; B; a; A:" << std::endl;
+        }
+        logfile << u << ", " << s << ", " << b << ", " << B << ", " << a << ", " << A << std::endl;
+        logfile.close();
+    } else {
+        std::cerr << "Unable to open log file" << std::endl;
+    }
 
     websocketpp::lib::error_code ec;
     if (ec) {
