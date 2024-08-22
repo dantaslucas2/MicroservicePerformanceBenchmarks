@@ -18,12 +18,15 @@ using websocketpp::lib::placeholders::_2;
 using websocketpp::lib::bind;
 using namespace rapidjson;
 
-std::list<int> minhaLista;
-
-void Write_in_file(){
-
+std::string get_current_timestamp() {
+    using namespace std::chrono;
+    auto now = system_clock::now();
+    auto now_ms = time_point_cast<milliseconds>(now).time_since_epoch().count();
+    return std::to_string(now_ms);
 }
+
 void on_message(client* c, websocketpp::connection_hdl hdl, message_ptr msg) {
+    std::string timestampReceive = get_current_timestamp();
     Document doc;
     if (doc.Parse(msg->get_payload().c_str()).HasParseError()) {
         std::cerr << "Error parse JSON" << std::endl;
@@ -35,26 +38,21 @@ void on_message(client* c, websocketpp::connection_hdl hdl, message_ptr msg) {
     std::string a = doc["a"].GetString();
     std::string A = doc["A"].GetString();
 
-    std::cout << "u: " << u << std::endl;
-    std::cout << "s: " << s << std::endl;
-    std::cout << "b: " << b << std::endl;
-    std::cout << "B: " << B << std::endl;
-    std::cout << "a: " << a << std::endl;
-    std::cout << "A: " << A << std::endl;
+    std::string timestampAfterParse = get_current_timestamp();
 
     namespace fs = std::filesystem;
     fs::path log_dir = fs::current_path().parent_path().parent_path() / "Logs";
     fs::create_directories(log_dir);
-    fs::path log_file = log_dir / "log.txt";
+    fs::path log_file = log_dir / "log_GCC.log";
 
     bool file_exists = fs::exists(log_file);
     std::ofstream logfile(log_file, std::ios_base::app);
 
     if (logfile.is_open()) {
         if (!file_exists) {
-            logfile << "u; s; b; B; a; A:" << std::endl;
+            logfile << "timestampReceive; timeParseNanosecond; u; s; b; B; a; A:" << std::endl;
         }
-        logfile << u << ", " << s << ", " << b << ", " << B << ", " << a << ", " << A << std::endl;
+        logfile << timestampReceive << "; " << timestampAfterParse << "; " << u << "; " << s << "; " << b << "; " << B << "; " << a << "; " << A << std::endl;
         logfile.close();
     } else {
         std::cerr << "Unable to open log file" << std::endl;
