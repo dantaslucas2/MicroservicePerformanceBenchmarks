@@ -29,6 +29,14 @@ namespace main
 
             Console.WriteLine($"Closing C# program");
         }
+        /// <summary>
+        /// Starts a microservice with a specified execution time.
+        /// Sets up a web application that responds to GET requests at the "/Spread" endpoint.
+        /// The microservice runs until the specified execution time elapses or a cancellation token is triggered.
+        /// </summary>
+        /// <param name="executionTime">
+        /// The duration in minutes for which the microservice should run before stopping.
+        /// </param>
         static void StartMicroservice(int executionTime)
         {
             var cts = new CancellationTokenSource(TimeSpan.FromMinutes(executionTime));
@@ -55,6 +63,12 @@ namespace main
 
             app.RunAsync(cts.Token).Wait();
         }
+        /// <summary>
+        /// Configures the log file for the application by creating the "Logs" directory and the "log_csharp.log" file if they do not already exist.
+        /// </summary>
+        /// <returns>
+        /// The full path of the created or existing log file.
+        /// </returns>
         static string SetupLogFile()
         {
             string currentDirectory = Directory.GetCurrentDirectory();
@@ -77,6 +91,16 @@ namespace main
             }
             return logFile;
         }
+        /// <summary>
+        /// The method handles incoming WebSocket messages, calculates the difference between values, and records the results along with processing times in a log file.
+        /// The process continues until the WebSocket connection is closed.
+        /// </summary>
+        /// <param name="logFile">
+        /// The path to the file where log entries will be appended.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Task"/> that represents the asynchronous operation.
+        /// </returns>
         public static async Task HandleMessages(string logFile)
         {
             ClientWebSocket webSocket = new ClientWebSocket();
@@ -91,7 +115,6 @@ namespace main
                 var stopwatch = Stopwatch.StartNew();
                 var response = (Encoding.UTF8.GetString(receiveBuffer, offset, result.Count));
                 var responseDeseralize = Utf8Json.JsonSerializer.Deserialize<BookTicker>(response);
-
 
                 // Console.WriteLine($"{response}");
                 _lockSpread.EnterWriteLock();
