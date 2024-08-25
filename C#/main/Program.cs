@@ -7,39 +7,21 @@ namespace main
 {
     public class Program
     {
-        public static string uri = "wss://stream.binance.com/ws/btcusdt@bookTicker";
+        public const string uri = "wss://stream.binance.com/ws/btcusdt@bookTicker";
         static int receiveChunkSize = 32768;
         static int offset = 0;
         static int dataPerPacket = 16384;
         private static double spread = 0;
         private static ReaderWriterLockSlim _lockSpread = new ReaderWriterLockSlim();
-        public async static Task Main(string[] args)
+        public static void Main(string[] args)
         {
             int executionTime = 0;
             if (args.Length > 0)
             {
                 executionTime = int.Parse(args[0]);
             }
-            string currentDirectory = Directory.GetCurrentDirectory();
-            DirectoryInfo parentDirectory = Directory.GetParent(Directory.GetParent(currentDirectory).FullName);
-
-            string logDirectory = Path.Combine(parentDirectory.FullName, "Logs");
-            string logFile = Path.Combine(logDirectory, "log_csharp.log");
-
-
-            if (!Directory.Exists(logDirectory))
-            {
-                Directory.CreateDirectory(logDirectory);
-            }
-
-
-            if (!File.Exists(logFile))
-            {
-                using (StreamWriter sw = File.CreateText(logFile))
-                {
-                    sw.WriteLine("timestampReceive; timeParseNanosecond; u; s; b; B; a; A; Spread");
-                }
-            }
+            
+            var logFile = SetupLogFile();
 
             Task longRunningTask = HandleMessages(logFile);
             
@@ -61,8 +43,31 @@ namespace main
 
             });
             app.RunAsync(cts.Token).Wait();
+
+            Console.WriteLine($"Closing C# program");
         }
-        
+        static string SetupLogFile()
+        {
+            string currentDirectory = Directory.GetCurrentDirectory();
+            DirectoryInfo parentDirectory = Directory.GetParent(Directory.GetParent(currentDirectory).FullName);
+
+            string logDirectory = Path.Combine(parentDirectory.FullName, "Logs");
+            string logFile = Path.Combine(logDirectory, "log_csharp.log");
+
+            if (!Directory.Exists(logDirectory))
+            {
+                Directory.CreateDirectory(logDirectory);
+            }
+
+            if (!File.Exists(logFile))
+            {
+                using (StreamWriter sw = File.CreateText(logFile))
+                {
+                    sw.WriteLine("timestampReceive; timeParseNanosecond; u; s; b; B; a; A; Spread");
+                }
+            }
+            return logFile;
+        }
         public static async Task HandleMessages(string logFile)
         {
             ClientWebSocket webSocket = new ClientWebSocket();
