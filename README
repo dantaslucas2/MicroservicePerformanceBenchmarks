@@ -1,4 +1,5 @@
-C
+# To run C++
+
 ## Prerequisites
 
 Make sure you have the following tools and libraries installed on your system:
@@ -43,29 +44,31 @@ cd vcpkg
 
 ## Building the Project
 
-### 1. Clone the repository:
-```sh
-git clone 
-cd 
-```
-
-### 2. Create a build directory and navigate to it:
+### 1. Create a build directory and navigate to it:
 ```sh
 mkdir build
 cd build
 ```
 
-### 3. Generate build files with CMake:
+### 2. Generate build files with CMake:
 ```sh
 cmake ..
 ```
 
-### 4. Compile the project:
+### 3. Compile the project:
 ```sh
 make
 ```
 
-### 5. Running the Program:
+### 4. Running the Program:
 ```sh
 ./main
 ```
+
+# To run Rust
+
+## Prerequisites
+
+## Installing Dependencies
+
+## Building the Project

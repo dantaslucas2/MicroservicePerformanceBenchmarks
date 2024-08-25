@@ -1,1 +1,1 @@
-/usr/bin/c++ CMakeFiles/main.dir/main.cpp.o -o main  -Wl,-rpath,/home/max/anaconda3/lib /home/max/anaconda3/lib/libboost_system.so.1.82.0 /usr/lib/x86_64-linux-gnu/libssl.so /usr/lib/x86_64-linux-gnu/libcrypto.so -lssl -lcrypto 
+/usr/bin/c++ -O3 -DNDEBUG CMakeFiles/main.dir/main.cpp.o -o main  -Wl,-rpath,/home/max/anaconda3/lib /home/max/anaconda3/lib/libboost_system.so.1.82.0 /usr/lib/x86_64-linux-gnu/libssl.so /usr/lib/x86_64-linux-gnu/libcrypto.so -lssl -lcrypto 

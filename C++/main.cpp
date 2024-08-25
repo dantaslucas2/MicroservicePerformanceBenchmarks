@@ -1,14 +1,18 @@
 #include <websocketpp/config/asio_client.hpp>
 #include <websocketpp/client.hpp>
-#include <rapidjson/document.h>
 #include <iostream>
 #include <filesystem>
 #include <chrono>
 #include <list>
 #include <fstream>
+#include <chrono>
 #include "rapidjson/document.h"
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
+#include <thread>
+#include <boost/asio.hpp>
+#include <boost/beast.hpp>
+#include <shared_mutex>
 
 typedef websocketpp::config::asio_client::message_type::ptr message_ptr;
 typedef websocketpp::client<websocketpp::config::asio_tls_client> client;
@@ -17,6 +21,64 @@ using websocketpp::lib::placeholders::_1;
 using websocketpp::lib::placeholders::_2;
 using websocketpp::lib::bind;
 using namespace rapidjson;
+using namespace std::chrono;
+
+namespace beast = boost::beast;
+namespace http = beast::http;
+namespace net = boost::asio;
+using tcp = net::ip::tcp;
+
+std::shared_mutex spreadMutex;
+double spread = 0.0;
+std::ofstream* logfiles = nullptr; 
+int requestCount = 0;
+
+
+void handle_session_sync(std::shared_ptr<tcp::socket> socket) {
+    try {
+        beast::flat_buffer buffer;
+        http::request<http::string_body> request;
+
+        http::read(*socket, buffer, request);
+
+        std::cout << "Request received " << requestCount++ << std::endl;
+
+        http::response<http::string_body> response{http::status::ok, request.version()};
+        response.set(http::field::server, "Boost.Beast");
+        response.set(http::field::content_type, "text/plain");
+        response.keep_alive(request.keep_alive());
+        std::shared_lock<std::shared_mutex> lock(spreadMutex);
+        response.body() = std::to_string(spread);
+        response.prepare_payload();
+
+        http::write(*socket, response);
+
+        socket->shutdown(tcp::socket::shutdown_send);
+    } catch (const std::exception& e) {
+        std::cerr << "Exception in handle_session_sync: " << e.what() << std::endl;
+    }
+}
+
+void http_server_sync(net::io_context& ioc, unsigned short port) {
+    tcp::acceptor acceptor(ioc, tcp::endpoint(tcp::v4(), port));
+
+    while (true) {
+        tcp::socket socket(ioc);
+        acceptor.accept(socket);
+
+        // std::cout << "Accepted connection" << std::endl;
+
+        handle_session_sync(std::make_shared<tcp::socket>(std::move(socket)));
+    }
+}
+
+void run_server_sync() {
+    net::io_context ioc;
+    unsigned short port = 8080;
+    http_server_sync(ioc, port);
+    ioc.run();
+}
+
 
 std::string get_current_timestamp() {
     using namespace std::chrono;
@@ -26,7 +88,9 @@ std::string get_current_timestamp() {
 }
 
 void on_message(client* c, websocketpp::connection_hdl hdl, message_ptr msg) {
-    std::string timestampReceive = get_current_timestamp();
+    std::string now = get_current_timestamp();
+    auto timestampReceive = high_resolution_clock::now();
+
     Document doc;
     if (doc.Parse(msg->get_payload().c_str()).HasParseError()) {
         std::cerr << "Error parse JSON" << std::endl;
@@ -38,22 +102,14 @@ void on_message(client* c, websocketpp::connection_hdl hdl, message_ptr msg) {
     std::string a = doc["a"].GetString();
     std::string A = doc["A"].GetString();
 
-    std::string timestampAfterParse = get_current_timestamp();
+    auto timestampAfterParse = high_resolution_clock::now(); 
+    auto duration = duration_cast<nanoseconds>(timestampAfterParse - timestampReceive).count();
 
-    namespace fs = std::filesystem;
-    fs::path log_dir = fs::current_path().parent_path().parent_path() / "Logs";
-    fs::create_directories(log_dir);
-    fs::path log_file = log_dir / "log_GCC.log";
-
-    bool file_exists = fs::exists(log_file);
-    std::ofstream logfile(log_file, std::ios_base::app);
-
-    if (logfile.is_open()) {
-        if (!file_exists) {
-            logfile << "timestampReceive; timeParseNanosecond; u; s; b; B; a; A:" << std::endl;
-        }
-        logfile << timestampReceive << "; " << timestampAfterParse << "; " << u << "; " << s << "; " << b << "; " << B << "; " << a << "; " << A << std::endl;
-        logfile.close();
+    if (logfiles->is_open()) {
+        std::unique_lock<std::shared_mutex> lock(spreadMutex);
+        spread = (std::stod(a) - std::stod(b));
+        *logfiles << now << "; " << duration << "; " << u << "; " << s << "; " << b << "; " << B << "; " << a << "; " << A << "; " << spread <<std::endl;
+        // logfiles->close();
     } else {
         std::cerr << "Unable to open log file" << std::endl;
     }
@@ -83,6 +139,21 @@ void Get_Binance_BTC_BBO_Book(){
 
     std::string uri = "wss://stream.binance.com/ws/btcusdt@bookTicker";
 
+    namespace fs = std::filesystem;
+    fs::path log_dir = fs::current_path().parent_path().parent_path() / "Logs";
+    fs::create_directories(log_dir);
+    fs::path log_file = log_dir / "log_gcc.log";
+
+    bool file_exists = fs::exists(log_file);
+    std::ofstream logfile(log_file, std::ios_base::app);
+    logfiles = &logfile;
+
+    if (logfile.is_open()) {
+        if (!file_exists) {
+            logfile << "timestampReceive; timeParseNanosecond; u; s; b; B; a; A; Spread" << std::endl;
+        }
+    }
+
     try {
 
         c.init_asio();
@@ -104,7 +175,23 @@ void Get_Binance_BTC_BBO_Book(){
         std::cout << e.what() << std::endl;
     }
 }
-
+//http://127.0.0.1:8080/Spread
 int main(int argc, char* argv[]) {
-    Get_Binance_BTC_BBO_Book();
+    int execution_time = 0;
+    if (argc > 1) {
+        execution_time = std::atoi(argv[1]);
+    }
+    try {
+        std::thread server_thread(run_server_sync);
+        server_thread.detach();
+
+        std::thread websocket_thread(Get_Binance_BTC_BBO_Book);
+        websocket_thread.detach();
+
+        std::this_thread::sleep_for(std::chrono::minutes(execution_time));
+        std::cout << " closing c++ program " << std::endl;
+        // Get_Binance_BTC_BBO_Book();
+    } catch (const std::exception& e) {
+        std::cerr << "Exception in main: " << e.what() << std::endl;
+    }
 }

@@ -62,6 +62,7 @@ CMakeFiles/main.dir/main.cpp.o
  /usr/include/x86_64-linux-gnu/bits/types/FILE.h
  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h
  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h
+ /usr/include/x86_64-linux-gnu/bits/wchar2.h
  /usr/include/c++/11/tuple
  /usr/include/c++/11/utility
  /usr/include/c++/11/bits/stl_relops.h
@@ -173,8 +174,11 @@ CMakeFiles/main.dir/main.cpp.o
  /usr/include/x86_64-linux-gnu/sys/select.h
  /usr/include/x86_64-linux-gnu/bits/select.h
  /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h
+ /usr/include/x86_64-linux-gnu/bits/select2.h
  /usr/include/alloca.h
+ /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h
+ /usr/include/x86_64-linux-gnu/bits/stdlib.h
  /usr/include/c++/11/bits/std_abs.h
  /usr/include/c++/11/cstdio
  /usr/include/stdio.h
@@ -183,6 +187,8 @@ CMakeFiles/main.dir/main.cpp.o
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h
  /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+ /usr/include/x86_64-linux-gnu/bits/stdio.h
+ /usr/include/x86_64-linux-gnu/bits/stdio2.h
  /usr/include/c++/11/bits/charconv.h
  /usr/include/c++/11/bits/basic_string.tcc
  /usr/include/c++/11/bits/std_mutex.h
@@ -301,6 +307,7 @@ CMakeFiles/main.dir/main.cpp.o
  /usr/include/x86_64-linux-gnu/asm/sockios.h
  /usr/include/asm-generic/sockios.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_osockaddr.h
+ /usr/include/x86_64-linux-gnu/bits/socket2.h
  /usr/include/x86_64-linux-gnu/bits/in.h
  /usr/include/websocketpp/message_buffer/alloc.hpp
  /usr/include/websocketpp/logger/basic.hpp
@@ -365,6 +372,7 @@ CMakeFiles/main.dir/main.cpp.o
  /usr/include/x86_64-linux-gnu/bits/confname.h
  /usr/include/x86_64-linux-gnu/bits/getopt_posix.h
  /usr/include/x86_64-linux-gnu/bits/getopt_core.h
+ /usr/include/x86_64-linux-gnu/bits/unistd.h
  /usr/include/x86_64-linux-gnu/bits/unistd_ext.h
  /usr/include/linux/close_range.h
  /home/max/anaconda3/include/boost/config/detail/select_platform_config.hpp
@@ -402,6 +410,8 @@ CMakeFiles/main.dir/main.cpp.o
  /usr/include/c++/11/cstring
  /usr/include/string.h
  /usr/include/strings.h
+ /usr/include/x86_64-linux-gnu/bits/strings_fortified.h
+ /usr/include/x86_64-linux-gnu/bits/string_fortified.h
  /home/max/anaconda3/include/boost/asio/execution/receiver_invocation_error.hpp
  /home/max/anaconda3/include/boost/asio/execution/impl/receiver_invocation_error.ipp
  /home/max/anaconda3/include/boost/asio/execution/set_done.hpp
@@ -586,6 +596,7 @@ CMakeFiles/main.dir/main.cpp.o
  /usr/include/poll.h
  /usr/include/x86_64-linux-gnu/sys/poll.h
  /usr/include/x86_64-linux-gnu/bits/poll.h
+ /usr/include/x86_64-linux-gnu/bits/poll2.h
  /usr/include/x86_64-linux-gnu/sys/stat.h
  /usr/include/x86_64-linux-gnu/bits/stat.h
  /usr/include/x86_64-linux-gnu/bits/struct_stat.h
@@ -602,6 +613,7 @@ CMakeFiles/main.dir/main.cpp.o
  /usr/include/x86_64-linux-gnu/bits/fcntl.h
  /usr/include/x86_64-linux-gnu/bits/fcntl-linux.h
  /usr/include/linux/falloc.h
+ /usr/include/x86_64-linux-gnu/bits/fcntl2.h
  /usr/include/x86_64-linux-gnu/sys/uio.h
  /usr/include/x86_64-linux-gnu/bits/uio-ext.h
  /usr/include/x86_64-linux-gnu/sys/un.h
@@ -1514,6 +1526,19 @@ CMakeFiles/main.dir/main.cpp.o
  /usr/include/websocketpp/sha1/sha1.hpp
  /usr/include/websocketpp/version.hpp
  /usr/include/websocketpp/impl/endpoint_impl.hpp
+ /usr/include/c++/11/filesystem
+ /usr/include/c++/11/bits/fs_fwd.h
+ /usr/include/c++/11/bits/fs_path.h
+ /usr/include/c++/11/codecvt
+ /usr/include/c++/11/bits/fs_dir.h
+ /usr/include/c++/11/bits/fs_ops.h
+ /usr/include/c++/11/list
+ /usr/include/c++/11/bits/stl_list.h
+ /usr/include/c++/11/bits/list.tcc
+ /usr/include/c++/11/fstream
+ /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h
+ /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h
+ /usr/include/c++/11/bits/fstream.tcc
  /usr/include/rapidjson/document.h
  /usr/include/rapidjson/reader.h
  /usr/include/rapidjson/allocators.h
@@ -1537,23 +1562,551 @@ CMakeFiles/main.dir/main.cpp.o
  /usr/include/rapidjson/rapidjson.h
  /usr/include/rapidjson/internal/strfunc.h
  /usr/include/rapidjson/stream.h
- /usr/include/c++/11/filesystem
- /usr/include/c++/11/bits/fs_fwd.h
- /usr/include/c++/11/bits/fs_path.h
- /usr/include/c++/11/codecvt
- /usr/include/c++/11/bits/fs_dir.h
- /usr/include/c++/11/bits/fs_ops.h
- /usr/include/c++/11/list
- /usr/include/c++/11/bits/stl_list.h
- /usr/include/c++/11/bits/list.tcc
- /usr/include/c++/11/fstream
- /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h
- /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h
- /usr/include/c++/11/bits/fstream.tcc
  /usr/include/rapidjson/writer.h
  /usr/include/rapidjson/internal/dtoa.h
  /usr/include/rapidjson/internal/itoa.h
  /usr/include/rapidjson/internal/itoa.h
  /usr/include/rapidjson/stringbuffer.h
  /usr/include/rapidjson/stringbuffer.h
+ /home/max/anaconda3/include/boost/beast.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/config.hpp
+ /home/max/anaconda3/include/boost/core/ignore_unused.hpp
+ /home/max/anaconda3/include/boost/beast/core.hpp
+ /home/max/anaconda3/include/boost/beast/core/async_base.hpp
+ /home/max/anaconda3/include/boost/beast/core/bind_handler.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/bind_handler.hpp
+ /home/max/anaconda3/include/boost/beast/core/error.hpp
+ /home/max/anaconda3/include/boost/beast/core/impl/error.hpp
+ /home/max/anaconda3/include/boost/beast/core/impl/error.ipp
+ /home/max/anaconda3/include/boost/beast/core/detail/tuple.hpp
+ /home/max/anaconda3/include/boost/mp11/integer_sequence.hpp
+ /home/max/anaconda3/include/boost/mp11/version.hpp
+ /home/max/anaconda3/include/boost/mp11/algorithm.hpp
+ /home/max/anaconda3/include/boost/mp11/list.hpp
+ /home/max/anaconda3/include/boost/mp11/integral.hpp
+ /home/max/anaconda3/include/boost/mp11/detail/mp_list.hpp
+ /home/max/anaconda3/include/boost/mp11/detail/mp_is_list.hpp
+ /home/max/anaconda3/include/boost/mp11/detail/mp_append.hpp
+ /home/max/anaconda3/include/boost/mp11/utility.hpp
+ /home/max/anaconda3/include/boost/mp11/detail/mp_fold.hpp
+ /home/max/anaconda3/include/boost/mp11/detail/config.hpp
+ /home/max/anaconda3/include/boost/mp11/detail/mp_front.hpp
+ /home/max/anaconda3/include/boost/mp11/detail/mp_rename.hpp
+ /home/max/anaconda3/include/boost/mp11/set.hpp
+ /home/max/anaconda3/include/boost/mp11/function.hpp
+ /home/max/anaconda3/include/boost/mp11/detail/mp_count.hpp
+ /home/max/anaconda3/include/boost/mp11/detail/mp_plus.hpp
+ /home/max/anaconda3/include/boost/mp11/detail/mp_min_element.hpp
+ /home/max/anaconda3/include/boost/mp11/detail/mp_void.hpp
+ /home/max/anaconda3/include/boost/mp11/detail/mp_copy_if.hpp
+ /home/max/anaconda3/include/boost/mp11/detail/mp_remove_if.hpp
+ /home/max/anaconda3/include/boost/mp11/detail/mp_map_find.hpp
+ /home/max/anaconda3/include/boost/mp11/detail/mp_with_index.hpp
+ /home/max/anaconda3/include/boost/type_traits/copy_cv.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_const.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_volatile.hpp
+ /home/max/anaconda3/include/boost/type_traits/add_const.hpp
+ /home/max/anaconda3/include/boost/type_traits/add_volatile.hpp
+ /home/max/anaconda3/include/boost/bind/std_placeholders.hpp
+ /home/max/anaconda3/include/boost/bind/detail/requires_cxx11.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/allocator.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/async_base.hpp
+ /home/max/anaconda3/include/boost/core/exchange.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/filtering_cancellation_slot.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/work_guard.hpp
+ /home/max/anaconda3/include/boost/optional.hpp
+ /home/max/anaconda3/include/boost/optional/optional.hpp
+ /home/max/anaconda3/include/boost/core/explicit_operator_bool.hpp
+ /home/max/anaconda3/include/boost/core/swap.hpp
+ /home/max/anaconda3/include/boost/optional/bad_optional_access.hpp
+ /home/max/anaconda3/include/boost/type_traits/alignment_of.hpp
+ /home/max/anaconda3/include/boost/type_traits/conjunction.hpp
+ /home/max/anaconda3/include/boost/type_traits/disjunction.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_nothrow_constructor.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_default_constructible.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_complete.hpp
+ /home/max/anaconda3/include/boost/type_traits/declval.hpp
+ /home/max/anaconda3/include/boost/type_traits/add_rvalue_reference.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_void.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_reference.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_lvalue_reference.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_rvalue_reference.hpp
+ /home/max/anaconda3/include/boost/type_traits/remove_reference.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_function.hpp
+ /home/max/anaconda3/include/boost/type_traits/detail/is_function_cxx_11.hpp
+ /home/max/anaconda3/include/boost/type_traits/detail/yes_no_type.hpp
+ /home/max/anaconda3/include/boost/type_traits/type_with_alignment.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_pod.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_scalar.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_enum.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_pointer.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_member_pointer.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_member_function_pointer.hpp
+ /home/max/anaconda3/include/boost/type_traits/detail/is_member_function_pointer_cxx_11.hpp
+ /home/max/anaconda3/include/boost/type_traits/remove_const.hpp
+ /home/max/anaconda3/include/boost/type_traits/decay.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_array.hpp
+ /home/max/anaconda3/include/boost/type_traits/remove_bounds.hpp
+ /home/max/anaconda3/include/boost/type_traits/remove_extent.hpp
+ /home/max/anaconda3/include/boost/type_traits/add_pointer.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_assignable.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_constructible.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_destructible.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_convertible.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_abstract.hpp
+ /home/max/anaconda3/include/boost/type_traits/add_lvalue_reference.hpp
+ /home/max/anaconda3/include/boost/type_traits/add_reference.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_nothrow_move_assignable.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_trivial_move_assign.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_nothrow_assign.hpp
+ /home/max/anaconda3/include/boost/type_traits/enable_if.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_nothrow_move_constructible.hpp
+ /home/max/anaconda3/include/boost/move/utility.hpp
+ /home/max/anaconda3/include/boost/move/detail/config_begin.hpp
+ /home/max/anaconda3/include/boost/move/detail/workaround.hpp
+ /home/max/anaconda3/include/boost/move/utility_core.hpp
+ /home/max/anaconda3/include/boost/move/core.hpp
+ /home/max/anaconda3/include/boost/move/detail/config_end.hpp
+ /home/max/anaconda3/include/boost/move/detail/meta_utils.hpp
+ /home/max/anaconda3/include/boost/move/detail/meta_utils_core.hpp
+ /home/max/anaconda3/include/boost/move/detail/addressof.hpp
+ /home/max/anaconda3/include/boost/move/traits.hpp
+ /home/max/anaconda3/include/boost/move/detail/type_traits.hpp
+ /home/max/anaconda3/include/boost/none.hpp
+ /home/max/anaconda3/include/boost/none_t.hpp
+ /home/max/anaconda3/include/boost/utility/compare_pointees.hpp
+ /home/max/anaconda3/include/boost/utility/result_of.hpp
+ /home/max/anaconda3/include/boost/type_traits/type_identity.hpp
+ /home/max/anaconda3/include/boost/utility/detail/result_of_variadic.hpp
+ /home/max/anaconda3/include/boost/optional/optional_fwd.hpp
+ /home/max/anaconda3/include/boost/optional/detail/optional_config.hpp
+ /home/max/anaconda3/include/boost/optional/detail/optional_factory_support.hpp
+ /home/max/anaconda3/include/boost/optional/detail/optional_aligned_storage.hpp
+ /home/max/anaconda3/include/boost/optional/detail/optional_hash.hpp
+ /home/max/anaconda3/include/boost/optional/detail/optional_trivially_copyable_base.hpp
+ /home/max/anaconda3/include/boost/optional/detail/optional_reference_spec.hpp
+ /home/max/anaconda3/include/boost/optional/detail/optional_relops.hpp
+ /home/max/anaconda3/include/boost/optional/detail/optional_swap.hpp
+ /home/max/anaconda3/include/boost/core/empty_value.hpp
+ /home/max/anaconda3/include/boost/beast/core/impl/async_base.hpp
+ /home/max/anaconda3/include/boost/beast/core/basic_stream.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/stream_base.hpp
+ /home/max/anaconda3/include/boost/beast/core/rate_policy.hpp
+ /home/max/anaconda3/include/boost/beast/core/role.hpp
+ /home/max/anaconda3/include/boost/beast/core/stream_traits.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/static_const.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/stream_traits.hpp
+ /home/max/anaconda3/include/boost/type_traits/make_void.hpp
+ /home/max/anaconda3/include/boost/enable_shared_from_this.hpp
+ /home/max/anaconda3/include/boost/smart_ptr/enable_shared_from_this.hpp
+ /home/max/anaconda3/include/boost/smart_ptr/weak_ptr.hpp
+ /home/max/anaconda3/include/boost/beast/core/impl/basic_stream.hpp
+ /home/max/anaconda3/include/boost/beast/core/buffer_traits.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/buffer_traits.hpp
+ /home/max/anaconda3/include/boost/beast/core/buffers_prefix.hpp
+ /home/max/anaconda3/include/boost/beast/core/impl/buffers_prefix.hpp
+ /home/max/anaconda3/include/boost/beast/websocket/teardown.hpp
+ /home/max/anaconda3/include/boost/beast/websocket/impl/teardown.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/bind_continuation.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/remap_post_to_defer.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/is_invocable.hpp
+ /home/max/anaconda3/include/boost/make_shared.hpp
+ /home/max/anaconda3/include/boost/smart_ptr/make_shared.hpp
+ /home/max/anaconda3/include/boost/smart_ptr/make_shared_object.hpp
+ /home/max/anaconda3/include/boost/smart_ptr/detail/sp_forward.hpp
+ /home/max/anaconda3/include/boost/smart_ptr/make_shared_array.hpp
+ /home/max/anaconda3/include/boost/core/default_allocator.hpp
+ /home/max/anaconda3/include/boost/smart_ptr/allocate_shared_array.hpp
+ /home/max/anaconda3/include/boost/core/allocator_access.hpp
+ /home/max/anaconda3/include/boost/core/pointer_traits.hpp
+ /home/max/anaconda3/include/boost/core/alloc_construct.hpp
+ /home/max/anaconda3/include/boost/core/noinit_adaptor.hpp
+ /home/max/anaconda3/include/boost/core/first_scalar.hpp
+ /home/max/anaconda3/include/boost/type_traits/extent.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_bounded_array.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_unbounded_array.hpp
+ /home/max/anaconda3/include/boost/beast/core/buffered_read_stream.hpp
+ /home/max/anaconda3/include/boost/beast/core/multi_buffer.hpp
+ /home/max/anaconda3/include/boost/intrusive/list.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/config_begin.hpp
+ /home/max/anaconda3/include/boost/intrusive/intrusive_fwd.hpp
+ /home/max/anaconda3/include/boost/intrusive/link_mode.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/workaround.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/assert.hpp
+ /home/max/anaconda3/include/boost/intrusive/list_hook.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/list_node.hpp
+ /home/max/anaconda3/include/boost/intrusive/pointer_rebind.hpp
+ /home/max/anaconda3/include/boost/intrusive/circular_list_algorithms.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/algo_type.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/config_end.hpp
+ /home/max/anaconda3/include/boost/intrusive/options.hpp
+ /home/max/anaconda3/include/boost/intrusive/pack_options.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/generic_hook.hpp
+ /home/max/anaconda3/include/boost/intrusive/pointer_traits.hpp
+ /home/max/anaconda3/include/boost/move/detail/pointer_element.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/mpl.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/node_holder.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/get_value_traits.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/hook_traits.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/parent_from_member.hpp
+ /home/max/anaconda3/include/boost/move/detail/to_raw_pointer.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/is_stateful_value_traits.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/function_detector.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/default_header_holder.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/reverse_iterator.hpp
+ /home/max/anaconda3/include/boost/move/detail/reverse_iterator.hpp
+ /home/max/anaconda3/include/boost/move/detail/iterator_traits.hpp
+ /home/max/anaconda3/include/boost/move/detail/std_ns_begin.hpp
+ /home/max/anaconda3/include/boost/move/detail/std_ns_end.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/uncast.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/list_iterator.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/std_fwd.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/iiterator.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/iterator.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/array_initializer.hpp
+ /home/max/anaconda3/include/boost/move/detail/placement_new.hpp
+ /home/max/anaconda3/include/boost/move/detail/force_ptr.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/exception_disposer.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/equal_to_value.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/key_nodeptr_comp.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/ebo_functor_holder.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/tree_value_compare.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/simple_disposers.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/size_holder.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/algorithm.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/value_functors.hpp
+ /home/max/anaconda3/include/boost/beast/core/impl/multi_buffer.hpp
+ /home/max/anaconda3/include/boost/beast/core/impl/buffered_read_stream.hpp
+ /home/max/anaconda3/include/boost/beast/core/read_size.hpp
+ /home/max/anaconda3/include/boost/beast/core/impl/read_size.hpp
+ /home/max/anaconda3/include/boost/beast/core/buffers_adaptor.hpp
+ /home/max/anaconda3/include/boost/beast/core/impl/buffers_adaptor.hpp
+ /home/max/anaconda3/include/boost/beast/core/buffers_cat.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/type_traits.hpp
+ /home/max/anaconda3/include/boost/beast/core/impl/buffers_cat.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/variant.hpp
+ /home/max/anaconda3/include/boost/beast/core/buffers_generator.hpp
+ /home/max/anaconda3/include/boost/beast/core/impl/buffers_generator.hpp
+ /home/max/anaconda3/include/boost/beast/core/buffers_range.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/buffers_range_adaptor.hpp
+ /home/max/anaconda3/include/boost/beast/core/buffers_suffix.hpp
+ /home/max/anaconda3/include/boost/beast/core/impl/buffers_suffix.hpp
+ /home/max/anaconda3/include/boost/type_traits.hpp
+ /home/max/anaconda3/include/boost/type_traits/add_cv.hpp
+ /home/max/anaconda3/include/boost/type_traits/aligned_storage.hpp
+ /home/max/anaconda3/include/boost/type_traits/common_type.hpp
+ /home/max/anaconda3/include/boost/type_traits/detail/mp_defer.hpp
+ /home/max/anaconda3/include/boost/type_traits/copy_cv_ref.hpp
+ /home/max/anaconda3/include/boost/type_traits/copy_reference.hpp
+ /home/max/anaconda3/include/boost/type_traits/floating_point_promotion.hpp
+ /home/max/anaconda3/include/boost/type_traits/function_traits.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_bit_and.hpp
+ /home/max/anaconda3/include/boost/type_traits/detail/has_binary_operator.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_bit_and_assign.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_bit_or.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_bit_or_assign.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_bit_xor.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_bit_xor_assign.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_complement.hpp
+ /home/max/anaconda3/include/boost/type_traits/detail/has_prefix_operator.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_dereference.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_divides.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_divides_assign.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_equal_to.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_greater.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_greater_equal.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_left_shift.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_left_shift_assign.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_less.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_less_equal.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_logical_and.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_logical_not.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_logical_or.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_minus.hpp
+ /home/max/anaconda3/include/boost/type_traits/remove_pointer.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_minus_assign.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_modulus.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_modulus_assign.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_multiplies.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_multiplies_assign.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_negate.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_new_operator.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_not_equal_to.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_nothrow_copy.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_copy_constructible.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_nothrow_destructor.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_trivial_destructor.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_plus.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_plus_assign.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_post_decrement.hpp
+ /home/max/anaconda3/include/boost/type_traits/detail/has_postfix_operator.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_post_increment.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_pre_decrement.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_pre_increment.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_right_shift.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_right_shift_assign.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_trivial_assign.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_trivial_constructor.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_trivial_copy.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_trivial_move_constructor.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_unary_minus.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_unary_plus.hpp
+ /home/max/anaconda3/include/boost/type_traits/has_virtual_destructor.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_complex.hpp
+ /usr/include/c++/11/complex
+ /home/max/anaconda3/include/boost/type_traits/is_compound.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_fundamental.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_copy_assignable.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_noncopyable.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_empty.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_final.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_float.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_list_constructible.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_member_object_pointer.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_nothrow_swappable.hpp
+ /home/max/anaconda3/include/boost/type_traits/detail/is_swappable_cxx_11.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_object.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_polymorphic.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_scoped_enum.hpp
+ /home/max/anaconda3/include/boost/type_traits/negation.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_signed.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_stateless.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_swappable.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_trivially_copyable.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_union.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_unscoped_enum.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_unsigned.hpp
+ /home/max/anaconda3/include/boost/type_traits/is_virtual_base_of.hpp
+ /home/max/anaconda3/include/boost/type_traits/make_signed.hpp
+ /home/max/anaconda3/include/boost/type_traits/make_unsigned.hpp
+ /home/max/anaconda3/include/boost/type_traits/rank.hpp
+ /home/max/anaconda3/include/boost/type_traits/remove_all_extents.hpp
+ /home/max/anaconda3/include/boost/type_traits/remove_cv_ref.hpp
+ /home/max/anaconda3/include/boost/type_traits/remove_volatile.hpp
+ /home/max/anaconda3/include/boost/type_traits/integral_promotion.hpp
+ /home/max/anaconda3/include/boost/type_traits/promote.hpp
+ /home/max/anaconda3/include/boost/beast/core/buffers_to_string.hpp
+ /home/max/anaconda3/include/boost/beast/core/detect_ssl.hpp
+ /home/max/anaconda3/include/boost/logic/tribool.hpp
+ /home/max/anaconda3/include/boost/logic/tribool_fwd.hpp
+ /home/max/anaconda3/include/boost/asio/yield.hpp
+ /home/max/anaconda3/include/boost/asio/coroutine.hpp
+ /home/max/anaconda3/include/boost/asio/unyield.hpp
+ /home/max/anaconda3/include/boost/beast/core/file.hpp
+ /home/max/anaconda3/include/boost/beast/core/file_base.hpp
+ /home/max/anaconda3/include/boost/beast/core/file_posix.hpp
+ /home/max/anaconda3/include/boost/beast/core/impl/file_posix.ipp
+ /home/max/anaconda3/include/boost/beast/core/file_stdio.hpp
+ /home/max/anaconda3/include/boost/beast/core/impl/file_stdio.ipp
+ /home/max/anaconda3/include/boost/beast/core/detail/win32_unicode_path.hpp
+ /home/max/anaconda3/include/boost/beast/core/file_win32.hpp
+ /home/max/anaconda3/include/boost/beast/core/flat_buffer.hpp
+ /home/max/anaconda3/include/boost/beast/core/impl/flat_buffer.hpp
+ /home/max/anaconda3/include/boost/beast/core/flat_static_buffer.hpp
+ /home/max/anaconda3/include/boost/beast/core/impl/flat_static_buffer.hpp
+ /home/max/anaconda3/include/boost/beast/core/impl/flat_static_buffer.ipp
+ /home/max/anaconda3/include/boost/beast/core/flat_stream.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/flat_stream.hpp
+ /home/max/anaconda3/include/boost/beast/core/impl/flat_stream.hpp
+ /home/max/anaconda3/include/boost/beast/core/static_buffer.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/buffers_pair.hpp
+ /home/max/anaconda3/include/boost/beast/core/impl/static_buffer.hpp
+ /home/max/anaconda3/include/boost/beast/core/impl/static_buffer.ipp
+ /home/max/anaconda3/include/boost/beast/core/make_printable.hpp
+ /home/max/anaconda3/include/boost/beast/core/ostream.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/ostream.hpp
+ /home/max/anaconda3/include/boost/beast/core/saved_handler.hpp
+ /home/max/anaconda3/include/boost/beast/core/impl/saved_handler.hpp
+ /home/max/anaconda3/include/boost/beast/core/impl/saved_handler.ipp
+ /home/max/anaconda3/include/boost/beast/core/span.hpp
+ /home/max/anaconda3/include/boost/core/span.hpp
+ /home/max/anaconda3/include/boost/core/data.hpp
+ /home/max/anaconda3/include/boost/beast/core/static_string.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/static_string.hpp
+ /home/max/anaconda3/include/boost/static_string/static_string.hpp
+ /home/max/anaconda3/include/boost/static_string/config.hpp
+ /home/max/anaconda3/include/boost/container_hash/hash.hpp
+ /home/max/anaconda3/include/boost/container_hash/hash_fwd.hpp
+ /home/max/anaconda3/include/boost/container_hash/detail/requires_cxx11.hpp
+ /home/max/anaconda3/include/boost/container_hash/is_range.hpp
+ /home/max/anaconda3/include/boost/container_hash/is_contiguous_range.hpp
+ /home/max/anaconda3/include/boost/container_hash/is_unordered_range.hpp
+ /home/max/anaconda3/include/boost/container_hash/is_described_class.hpp
+ /home/max/anaconda3/include/boost/describe/bases.hpp
+ /home/max/anaconda3/include/boost/describe/modifiers.hpp
+ /home/max/anaconda3/include/boost/describe/detail/config.hpp
+ /home/max/anaconda3/include/boost/describe/detail/void_t.hpp
+ /home/max/anaconda3/include/boost/describe/members.hpp
+ /home/max/anaconda3/include/boost/describe/detail/cx_streq.hpp
+ /home/max/anaconda3/include/boost/mp11/bind.hpp
+ /home/max/anaconda3/include/boost/container_hash/detail/hash_tuple_like.hpp
+ /home/max/anaconda3/include/boost/container_hash/is_tuple_like.hpp
+ /home/max/anaconda3/include/boost/container_hash/detail/hash_mix.hpp
+ /home/max/anaconda3/include/boost/container_hash/detail/hash_range.hpp
+ /home/max/anaconda3/include/boost/container_hash/detail/mulx.hpp
+ /usr/include/c++/11/typeindex
+ /usr/include/c++/11/optional
+ /usr/include/c++/11/variant
+ /home/max/anaconda3/include/boost/utility/string_view.hpp
+ /home/max/anaconda3/include/boost/io/ostream_put.hpp
+ /home/max/anaconda3/include/boost/io/detail/buffer_fill.hpp
+ /home/max/anaconda3/include/boost/io/detail/ostream_guard.hpp
+ /home/max/anaconda3/include/boost/utility/string_view_fwd.hpp
+ /home/max/anaconda3/include/boost/core/detail/string_view.hpp
+ /home/max/anaconda3/include/boost/core/detail/is_same.hpp
+ /home/max/anaconda3/include/boost/beast/core/string.hpp
+ /home/max/anaconda3/include/boost/beast/core/string_type.hpp
+ /home/max/anaconda3/include/boost/beast/core/impl/string.ipp
+ /home/max/anaconda3/include/boost/beast/core/detail/string.hpp
+ /home/max/anaconda3/include/boost/beast/core/tcp_stream.hpp
+ /home/max/anaconda3/include/boost/beast/http.hpp
+ /home/max/anaconda3/include/boost/beast/http/basic_dynamic_body.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/buffer.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/clamp.hpp
+ /home/max/anaconda3/include/boost/beast/http/error.hpp
+ /home/max/anaconda3/include/boost/beast/http/impl/error.hpp
+ /home/max/anaconda3/include/boost/beast/http/impl/error.ipp
+ /home/max/anaconda3/include/boost/beast/http/message.hpp
+ /home/max/anaconda3/include/boost/beast/http/fields.hpp
+ /home/max/anaconda3/include/boost/beast/http/field.hpp
+ /home/max/anaconda3/include/boost/beast/http/impl/field.ipp
+ /home/max/anaconda3/include/boost/intrusive/set.hpp
+ /home/max/anaconda3/include/boost/intrusive/rbtree.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/minimal_less_equal_header.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/minimal_pair_header.hpp
+ /home/max/anaconda3/include/boost/intrusive/set_hook.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/rbtree_node.hpp
+ /home/max/anaconda3/include/boost/intrusive/rbtree_algorithms.hpp
+ /home/max/anaconda3/include/boost/intrusive/bstree_algorithms.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/bstree_algorithms_base.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/math.hpp
+ /home/max/anaconda3/include/boost/intrusive/pointer_plus_bits.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/tree_node.hpp
+ /home/max/anaconda3/include/boost/intrusive/bstree.hpp
+ /home/max/anaconda3/include/boost/intrusive/bs_set_hook.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/tree_iterator.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/empty_node_checker.hpp
+ /home/max/anaconda3/include/boost/intrusive/detail/node_cloner_disposer.hpp
+ /home/max/anaconda3/include/boost/intrusive/parent_from_member.hpp
+ /home/max/anaconda3/include/boost/move/adl_move_swap.hpp
+ /home/max/anaconda3/include/boost/beast/http/impl/fields.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/buffers_ref.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/temporary_buffer.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/impl/temporary_buffer.ipp
+ /home/max/anaconda3/include/boost/beast/http/verb.hpp
+ /home/max/anaconda3/include/boost/beast/http/impl/verb.ipp
+ /home/max/anaconda3/include/boost/beast/http/rfc7230.hpp
+ /home/max/anaconda3/include/boost/beast/http/detail/rfc7230.hpp
+ /home/max/anaconda3/include/boost/beast/http/detail/rfc7230.ipp
+ /home/max/anaconda3/include/boost/beast/http/detail/basic_parsed_list.hpp
+ /home/max/anaconda3/include/boost/beast/http/impl/rfc7230.hpp
+ /home/max/anaconda3/include/boost/beast/http/impl/rfc7230.ipp
+ /home/max/anaconda3/include/boost/beast/http/status.hpp
+ /home/max/anaconda3/include/boost/beast/http/impl/status.ipp
+ /home/max/anaconda3/include/boost/beast/http/chunk_encode.hpp
+ /home/max/anaconda3/include/boost/beast/http/type_traits.hpp
+ /home/max/anaconda3/include/boost/beast/http/detail/type_traits.hpp
+ /home/max/anaconda3/include/boost/beast/http/detail/chunk_encode.hpp
+ /home/max/anaconda3/include/boost/beast/http/impl/chunk_encode.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/varint.hpp
+ /home/max/anaconda3/include/boost/beast/http/impl/fields.ipp
+ /home/max/anaconda3/include/boost/beast/http/impl/message.hpp
+ /home/max/anaconda3/include/boost/beast/http/basic_file_body.hpp
+ /home/max/anaconda3/include/boost/beast/http/basic_parser.hpp
+ /home/max/anaconda3/include/boost/beast/http/detail/basic_parser.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/char_buffer.hpp
+ /home/max/anaconda3/include/boost/beast/http/detail/basic_parser.ipp
+ /home/max/anaconda3/include/boost/beast/http/impl/basic_parser.hpp
+ /home/max/anaconda3/include/boost/make_unique.hpp
+ /home/max/anaconda3/include/boost/smart_ptr/make_unique.hpp
+ /home/max/anaconda3/include/boost/beast/http/impl/basic_parser.ipp
+ /home/max/anaconda3/include/boost/beast/http/buffer_body.hpp
+ /home/max/anaconda3/include/boost/beast/http/dynamic_body.hpp
+ /home/max/anaconda3/include/boost/beast/http/empty_body.hpp
+ /home/max/anaconda3/include/boost/beast/http/file_body.hpp
+ /home/max/anaconda3/include/boost/beast/http/impl/file_body_win32.hpp
+ /home/max/anaconda3/include/boost/beast/http/message_generator.hpp
+ /home/max/anaconda3/include/boost/beast/http/serializer.hpp
+ /home/max/anaconda3/include/boost/beast/http/impl/serializer.hpp
+ /home/max/anaconda3/include/boost/beast/http/impl/message_generator.hpp
+ /home/max/anaconda3/include/boost/beast/http/parser.hpp
+ /home/max/anaconda3/include/boost/beast/http/impl/parser.hpp
+ /home/max/anaconda3/include/boost/beast/http/read.hpp
+ /home/max/anaconda3/include/boost/beast/http/impl/read.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/read.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/impl/read.hpp
+ /home/max/anaconda3/include/boost/beast/http/span_body.hpp
+ /home/max/anaconda3/include/boost/beast/http/string_body.hpp
+ /home/max/anaconda3/include/boost/beast/http/vector_body.hpp
+ /home/max/anaconda3/include/boost/beast/http/write.hpp
+ /home/max/anaconda3/include/boost/beast/http/impl/write.hpp
+ /home/max/anaconda3/include/boost/beast/version.hpp
+ /home/max/anaconda3/include/boost/beast/websocket.hpp
+ /home/max/anaconda3/include/boost/beast/websocket/error.hpp
+ /home/max/anaconda3/include/boost/beast/websocket/impl/error.hpp
+ /home/max/anaconda3/include/boost/beast/websocket/impl/error.ipp
+ /home/max/anaconda3/include/boost/beast/websocket/option.hpp
+ /home/max/anaconda3/include/boost/beast/websocket/rfc6455.hpp
+ /home/max/anaconda3/include/boost/beast/websocket/impl/rfc6455.hpp
+ /home/max/anaconda3/include/boost/beast/websocket/stream.hpp
+ /home/max/anaconda3/include/boost/beast/websocket/stream_base.hpp
+ /home/max/anaconda3/include/boost/beast/websocket/detail/decorator.hpp
+ /home/max/anaconda3/include/boost/beast/websocket/stream_fwd.hpp
+ /home/max/anaconda3/include/boost/beast/websocket/detail/hybi13.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/base64.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/base64.ipp
+ /home/max/anaconda3/include/boost/beast/websocket/detail/hybi13.ipp
+ /home/max/anaconda3/include/boost/beast/core/detail/sha1.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/sha1.ipp
+ /home/max/anaconda3/include/boost/beast/websocket/detail/prng.hpp
+ /home/max/anaconda3/include/boost/beast/websocket/detail/prng.ipp
+ /home/max/anaconda3/include/boost/beast/core/detail/chacha.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/pcg.hpp
+ /home/max/anaconda3/include/boost/beast/websocket/detail/impl_base.hpp
+ /home/max/anaconda3/include/boost/beast/websocket/detail/frame.hpp
+ /home/max/anaconda3/include/boost/beast/websocket/detail/utf8_checker.hpp
+ /home/max/anaconda3/include/boost/beast/websocket/detail/utf8_checker.ipp
+ /home/max/anaconda3/include/boost/endian/conversion.hpp
+ /home/max/anaconda3/include/boost/endian/detail/requires_cxx11.hpp
+ /home/max/anaconda3/include/boost/endian/detail/endian_reverse.hpp
+ /home/max/anaconda3/include/boost/endian/detail/integral_by_size.hpp
+ /home/max/anaconda3/include/boost/endian/detail/intrinsic.hpp
+ /home/max/anaconda3/include/boost/endian/detail/is_scoped_enum.hpp
+ /home/max/anaconda3/include/boost/endian/detail/endian_load.hpp
+ /home/max/anaconda3/include/boost/endian/detail/order.hpp
+ /home/max/anaconda3/include/boost/core/scoped_enum.hpp
+ /home/max/anaconda3/include/boost/endian/detail/is_trivially_copyable.hpp
+ /home/max/anaconda3/include/boost/endian/detail/endian_store.hpp
+ /home/max/anaconda3/include/boost/beast/websocket/detail/pmd_extension.hpp
+ /home/max/anaconda3/include/boost/beast/websocket/detail/pmd_extension.ipp
+ /home/max/anaconda3/include/boost/beast/zlib/deflate_stream.hpp
+ /home/max/anaconda3/include/boost/beast/zlib/error.hpp
+ /home/max/anaconda3/include/boost/beast/zlib/impl/error.hpp
+ /home/max/anaconda3/include/boost/beast/zlib/impl/error.ipp
+ /home/max/anaconda3/include/boost/beast/zlib/zlib.hpp
+ /home/max/anaconda3/include/boost/beast/zlib/detail/deflate_stream.hpp
+ /home/max/anaconda3/include/boost/beast/zlib/detail/ranges.hpp
+ /home/max/anaconda3/include/boost/beast/zlib/detail/deflate_stream.ipp
+ /home/max/anaconda3/include/boost/beast/zlib/inflate_stream.hpp
+ /home/max/anaconda3/include/boost/beast/zlib/detail/inflate_stream.hpp
+ /home/max/anaconda3/include/boost/beast/zlib/detail/bitstream.hpp
+ /home/max/anaconda3/include/boost/beast/zlib/detail/window.hpp
+ /home/max/anaconda3/include/boost/beast/zlib/detail/inflate_stream.ipp
+ /home/max/anaconda3/include/boost/beast/websocket/impl/stream_impl.hpp
+ /home/max/anaconda3/include/boost/beast/websocket/detail/mask.hpp
+ /home/max/anaconda3/include/boost/beast/websocket/detail/mask.ipp
+ /home/max/anaconda3/include/boost/beast/websocket/detail/service.hpp
+ /home/max/anaconda3/include/boost/beast/core/detail/service_base.hpp
+ /home/max/anaconda3/include/boost/beast/websocket/detail/service.ipp
+ /home/max/anaconda3/include/boost/beast/websocket/detail/soft_mutex.hpp
+ /home/max/anaconda3/include/boost/beast/websocket/impl/accept.hpp
+ /home/max/anaconda3/include/boost/beast/websocket/detail/type_traits.hpp
+ /home/max/anaconda3/include/boost/beast/websocket/impl/close.hpp
+ /home/max/anaconda3/include/boost/beast/websocket/impl/handshake.hpp
+ /home/max/anaconda3/include/boost/beast/websocket/impl/ping.hpp
+ /home/max/anaconda3/include/boost/beast/websocket/impl/read.hpp
+ /home/max/anaconda3/include/boost/beast/websocket/impl/stream.hpp
+ /home/max/anaconda3/include/boost/beast/websocket/impl/write.hpp
+ /home/max/anaconda3/include/boost/beast/zlib.hpp
+ /usr/include/c++/11/shared_mutex
 
