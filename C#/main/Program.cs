@@ -25,26 +25,35 @@ namespace main
 
             Task longRunningTask = HandleMessages(logFile);
             
+            StartMicroservice(executionTime);
+
+            Console.WriteLine($"Closing C# program");
+        }
+        static void StartMicroservice(int executionTime)
+        {
             var cts = new CancellationTokenSource(TimeSpan.FromMinutes(executionTime));
 
-            var builder = WebApplication.CreateBuilder(args);
+            var builder = WebApplication.CreateBuilder();
 
             var app = builder.Build();
 
             app.MapGet("/Spread", () => {
-            try{
-                _lockSpread.EnterReadLock();
-                return spread;
-            }catch{
-                return 0;
-            }finally{
-                _lockSpread.ExitReadLock();
-            }
-
+                try
+                {
+                    _lockSpread.EnterReadLock();
+                    return spread;
+                }
+                catch
+                {
+                    return 0;
+                }
+                finally
+                {
+                    _lockSpread.ExitReadLock();
+                }
             });
-            app.RunAsync(cts.Token).Wait();
 
-            Console.WriteLine($"Closing C# program");
+            app.RunAsync(cts.Token).Wait();
         }
         static string SetupLogFile()
         {
