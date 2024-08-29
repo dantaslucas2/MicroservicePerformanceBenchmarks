@@ -13,6 +13,7 @@
 #include <boost/asio.hpp>
 #include <boost/beast.hpp>
 #include <shared_mutex>
+#include <nlohmann/json.hpp>
 
 typedef websocketpp::config::asio_client::message_type::ptr message_ptr;
 typedef websocketpp::client<websocketpp::config::asio_tls_client> client;
@@ -44,37 +45,50 @@ const std::string uri = "wss://stream.binance.com/ws/btcusdt@bookTicker";
  * 
  * @param socket Shared pointer to the TCP socket connected to a client.
  */
-void handle_session_sync(std::shared_ptr<tcp::socket> socket) {
-    try {
-        beast::flat_buffer buffer;
-        http::request<http::string_body> request;
+void handle_session_async(std::shared_ptr<tcp::socket> socket) {
+    auto buffer = std::make_shared<beast::flat_buffer>();
+    auto request = std::make_shared<http::request<http::string_body>>();
+    auto response = std::make_shared<http::response<http::string_body>>();
 
-        http::read(*socket, buffer, request);
+    auto on_read = std::make_shared<std::function<void(boost::system::error_code, std::size_t)>>();
+    *on_read = [socket, buffer, request, response, on_read](boost::system::error_code ec, std::size_t bytes_transferred) mutable {
+        if (!ec) {
+            if (request->target() == "/Spread") {
+                *response = http::response<http::string_body>{http::status::ok, request->version()};
+                response->set(http::field::server, "Boost.Beast");
+                response->set(http::field::content_type, "application/json");
+                response->keep_alive(request->keep_alive());
 
-        std::cout << "Request received " << requestCount++ << std::endl;
-        http::response<http::string_body> response;
-        
-        if (request.target() == "/Spread") {
-            response = http::response<http::string_body>{http::status::ok, request.version()};
-            response.set(http::field::server, "Boost.Beast");
-            response.set(http::field::content_type, "text/plain");
-            response.keep_alive(request.keep_alive());
-            std::shared_lock<std::shared_mutex> lock(spreadMutex);
-            response.body() = std::to_string(spread);
-        } else {
-            response = http::response<http::string_body>{http::status::not_found, request.version()};
-            response.body() = "Resource not found";
+                std::shared_lock<std::shared_mutex> lock(spreadMutex);
+
+                nlohmann::json json_response;
+                json_response["spread"] = spread;
+                json_response["timestamp"] = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::time_point_cast<std::chrono::milliseconds>(std::chrono::system_clock::now()).time_since_epoch()).count();
+
+                response->body() = json_response.dump();
+            } else {
+                *response = http::response<http::string_body>{http::status::not_found, request->version()};
+                response->set(http::field::content_type, "application/json");
+
+                nlohmann::json json_response;
+                json_response["error"] = "Resource not found";
+
+                response->body() = json_response.dump();
+            }
+
+            response->prepare_payload();
+
+            http::async_write(*socket, *response, [socket](boost::system::error_code ec, std::size_t) {
+                if (!ec) {
+                    socket->shutdown(tcp::socket::shutdown_send);
+                }
+            });
         }
+    };
 
-        response.prepare_payload();
-
-        http::write(*socket, response);
-
-        socket->shutdown(tcp::socket::shutdown_send);
-    } catch (const std::exception& e) {
-        std::cerr << "Exception in handle_session_sync: " << e.what() << std::endl;
-    }
+    http::async_read(*socket, *buffer, *request, *on_read);
 }
+
 /**
  * @brief Runs a synchronous HTTP server on a specified port.
  *
@@ -84,15 +98,22 @@ void handle_session_sync(std::shared_ptr<tcp::socket> socket) {
  * @param ioc Reference to the I/O context object for network operations.
  * @param port Port number on which the server will listen for incoming connections.
  */
-void http_server_sync(net::io_context& ioc, unsigned short port) {
-    tcp::acceptor acceptor(ioc, tcp::endpoint(tcp::v4(), port));
+void http_server_async(net::io_context& ioc, unsigned short port) {
+    auto acceptor = std::make_shared<tcp::acceptor>(ioc, tcp::endpoint(tcp::v4(), port));
 
-    while (true) {
-        tcp::socket socket(ioc);
-        acceptor.accept(socket);
+    auto do_accept = std::make_shared<std::function<void()>>();
+    *do_accept = [acceptor, &ioc, do_accept]() {
+        auto socket = std::make_shared<tcp::socket>(ioc.get_executor());
 
-        handle_session_sync(std::make_shared<tcp::socket>(std::move(socket)));
-    }
+        acceptor->async_accept(*socket, [socket, acceptor, do_accept](boost::system::error_code ec) {
+            if (!ec) {
+                handle_session_async(socket);
+            }
+            (*do_accept)();
+        });
+    };
+
+    (*do_accept)();
 }
 /**
  * @brief Initializes and runs a synchronous HTTP server.
@@ -100,11 +121,30 @@ void http_server_sync(net::io_context& ioc, unsigned short port) {
  * Sets up the necessary network environment and initiates the http_server_sync function
  * on a specified port to handle incoming HTTP requests.
  */
-void run_server_sync() {
+void run_server_async() {
     net::io_context ioc;
+
     unsigned short port = 8080;
-    http_server_sync(ioc, port);
+    std::size_t num_threads = std::thread::hardware_concurrency() * 2;
+
+    http_server_async(ioc, port);
+
+    std::vector<std::thread> threads;
+    threads.reserve(num_threads);
+
+    for (std::size_t i = 0; i < num_threads; ++i) {
+        threads.emplace_back([&ioc] {
+            ioc.run();
+        });
+    }
+
     ioc.run();
+
+    for (auto& t : threads) {
+        if (t.joinable()) {
+            t.join();
+        }
+    }
 }
 
 std::string get_current_timestamp() {
@@ -239,7 +279,7 @@ int main(int argc, char* argv[]) {
     try {
         setup_log_file();
         
-        std::thread server_thread(run_server_sync);
+        std::thread server_thread(run_server_async);
         server_thread.detach();
 
         std::thread websocket_thread(get_binance_btc_bbo_book);
