@@ -1,6 +1,6 @@
 use tokio_tungstenite::{connect_async, tungstenite::protocol::Message};
 use futures_util::stream::StreamExt;
-use serde::{Deserialize};
+use serde::{Deserialize, Serialize};
 use std::fs::{self, OpenOptions, File};
 use std::io::{Write, BufWriter};
 use chrono::Utc;
@@ -12,6 +12,7 @@ use lazy_static::lazy_static;
 use std::str::FromStr;
 use std::net::SocketAddr;
 use tokio::time::{self, Duration};
+use std::time::{SystemTime, UNIX_EPOCH};
 
 const URL: &str = "wss://stream.binance.com/ws/btcusdt@bookTicker";
 
@@ -83,8 +84,9 @@ fn setup_log_file() -> std::io::Result<BufWriter<std::fs::File>> {
 }
 /// Launches an asynchronous microservice for handling "Spread" requests.
 ///
-/// This service sets up an HTTP server on localhost at port 3030, listening for requests to the "/Spread" path.
-/// It asynchronously fetches and returns spread data as JSON.
+/// This function sets up an HTTP server on localhost at port 3030, listening for requests to the "/Spread" path.
+/// It uses the `warp` framework to define a route that responds to GET requests with JSON data containing the
+/// current spread value and a timestamp. The server runs until it is explicitly stopped.
 ///
 /// # Example
 /// ```
@@ -93,7 +95,7 @@ fn setup_log_file() -> std::io::Result<BufWriter<std::fs::File>> {
 ///     start_spread_microservice().await;
 /// }
 /// ```
-async fn start_spread_microservice(){
+async fn start_spread_microservice() {
     let get_route = warp::path!("Spread")
         .and_then(|| async {
             let data = get_spread().await;
@@ -106,16 +108,28 @@ async fn start_spread_microservice(){
 
     server.await;
 }
-/// Asynchronously retrieves the current spread value from a shared state.
+/// Asynchronously retrieves the current spread value and the current timestamp.
 ///
-/// This function reads from a global `SPREAD` variable, assumed to be a concurrently accessible state, 
-/// such as an `async_rwlock` or similar structure, and returns the value.
+/// This function reads the current spread value from a shared state variable `SPREAD`, which is expected to be a
+/// globally accessible and concurrently readable state. It also retrieves the current system time and converts it
+/// to milliseconds since the Unix epoch. The function returns a `SpreadResponse` struct containing both the spread
+/// value and the timestamp.
 ///
 /// # Returns
-/// Returns the current spread as a `f64`.
-async fn get_spread() -> f64 {
+/// Returns a `SpreadResponse` struct with:
+/// - `spread`: The current spread value as a `f64`.
+/// - `timestamp`: The current timestamp in milliseconds as a `String`.
+async fn get_spread() -> SpreadResponse {
     let spread = SPREAD.read().await;
-    *spread
+    let timestamp = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .expect("Time went backwards")
+        .as_millis();
+    
+    SpreadResponse {
+        spread: *spread,
+        timestamp: timestamp.to_string(),
+    }
 }
 /// Asynchronously handles incoming WebSocket messages and logs spread data.
 ///
@@ -183,4 +197,9 @@ struct BookTicker {
     B: String, // best bid qty
     a: String, // best ask price
     A: String, // best ask qty
+}
+#[derive(Serialize)]
+struct SpreadResponse {
+    spread: f64,
+    timestamp: String,
 }
