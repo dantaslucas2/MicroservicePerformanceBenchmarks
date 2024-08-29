@@ -46,18 +46,27 @@ namespace main
             var app = builder.Build();
 
             app.MapGet("/Spread", () => {
+                // _lockSpread.EnterReadLock();
                 try
                 {
-                    _lockSpread.EnterReadLock();
-                    return spread;
+                    return Results.Json(new SpreadResponse
+                    {
+                        // Spread = spread,
+                        Spread = 0.0009911,
+                        Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString()
+                    });
                 }
                 catch
                 {
-                    return 0;
+                    return Results.Json(new SpreadResponse
+                    {
+                        Spread = 0,
+                        Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString()
+                    });
                 }
                 finally
                 {
-                    _lockSpread.ExitReadLock();
+                    // _lockSpread.ExitReadLock();
                 }
             });
 
@@ -106,7 +115,7 @@ namespace main
             ClientWebSocket webSocket = new ClientWebSocket();
             await webSocket.ConnectAsync(new Uri(uri), CancellationToken.None);
             var receiveBuffer = new byte[receiveChunkSize];
-
+            double tempSpread = 0;
             while (webSocket.State == WebSocketState.Open)
             {
                 ArraySegment<byte> bytesReceived = new ArraySegment<byte>(receiveBuffer, offset, dataPerPacket);
@@ -116,12 +125,11 @@ namespace main
                 var response = (Encoding.UTF8.GetString(receiveBuffer, offset, result.Count));
                 var responseDeseralize = Utf8Json.JsonSerializer.Deserialize<BookTicker>(response);
 
-                // Console.WriteLine($"{response}");
+                tempSpread = Convert.ToDouble(responseDeseralize.a, CultureInfo.InvariantCulture) - Convert.ToDouble(responseDeseralize.b, CultureInfo.InvariantCulture);
                 _lockSpread.EnterWriteLock();
                 try
                 {
-                    spread = Convert.ToDouble(responseDeseralize.a, CultureInfo.InvariantCulture) - Convert.ToDouble(responseDeseralize.b, CultureInfo.InvariantCulture);
-                    // Console.WriteLine(spread);
+                    spread =  tempSpread;
                 }
                 finally
                 {
@@ -132,14 +140,12 @@ namespace main
                 long timeParseNanosecond = stopwatch.ElapsedTicks * (1000000000L / Stopwatch.Frequency);
                 using (StreamWriter sw = File.AppendText(logFile))
                 {
-                    _lockSpread.EnterReadLock();
                     try
                     {
-                        sw.WriteLine($"{now}; {timeParseNanosecond}; {responseDeseralize.u}; {responseDeseralize.s}; {responseDeseralize.b}; {responseDeseralize.B}; {responseDeseralize.a}; {responseDeseralize.A}; {spread}");
+                        sw.WriteLine($"{now}; {timeParseNanosecond}; {responseDeseralize.u}; {responseDeseralize.s}; {responseDeseralize.b}; {responseDeseralize.B}; {responseDeseralize.a}; {responseDeseralize.A}; {tempSpread}");
                     }
-                    finally
+                    catch
                     {
-                        _lockSpread.ExitReadLock();
                     }
                 }
             }
@@ -154,4 +160,10 @@ namespace main
         public string a;  // best ask price
         public string A; // best ask qty
     }
+    public class SpreadResponse
+    {
+        public double Spread { get; set; }
+        public string Timestamp { get; set; }
+    }
+
 }
