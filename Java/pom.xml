@@ -5,14 +5,14 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.0</version>
+        <version>3.3.3</version>
     </parent>
     <groupId>com.main</groupId>
     <artifactId>main</artifactId>
     <version>1.0</version>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>22</java.version>
     </properties>
 
     <dependencies>
@@ -36,6 +36,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.3.0</version> 
             </plugin>
         </plugins>
     </build>
