@@ -10,8 +10,19 @@ import java.util.concurrent.locks.*;
 import java.net.InetSocketAddress;
 import com.sun.net.httpserver.HttpServer;
 
-import com.google.gson.*;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.socket.client.WebSocketClient;
+import org.springframework.web.socket.client.standard.StandardWebSocketClient;
+import org.springframework.web.socket.WebSocketSession;
+import org.springframework.web.socket.handler.TextWebSocketHandler;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.*;
+@SpringBootApplication
 public class Main {
     private static final String URL = "wss://stream.binance.com/ws/btcusdt@bookTicker";
     private static double spread = 0;
@@ -19,6 +30,7 @@ public class Main {
     private static final Gson gson = new Gson();
 
     public static void main(String[] args) {
+        SpringApplication.run(Main.class, args);
         int executionTime = 0;
         if (args.length > 0) {
             executionTime = Integer.parseInt(args[0]);
@@ -27,52 +39,36 @@ public class Main {
         Path logFile = setupLogFile();
         ExecutorService executor = Executors.newSingleThreadExecutor();
 
+        scheduleShutdown(executionTime);
+
         CompletableFuture<Void> handleMessagesFuture = handleMessages(logFile, executor);
-
-        startMicroservice(executionTime);
-
-        System.out.println("Closing Java program");
     }
-    private static void startMicroservice(int executionTime) {
-        try {
-            var server = HttpServer.create(new InetSocketAddress(8080), 0);
-            server.setExecutor(Executors.newFixedThreadPool(40));
-            server.createContext("/Spread", (exchange -> {
-                String response;
-                lockSpread.readLock().lock();
-                var tempSpread = spread;
-                lockSpread.readLock().unlock();
-                System.out.println(server.getExecutor());
+    @RestController
+    public class SpreadController {
 
-                try {
-                    SpreadResponse spreadResponse = new SpreadResponse();
-                    spreadResponse.Spread = tempSpread;
-                    spreadResponse.Timestamp = String.valueOf(Instant.now().toEpochMilli());
-                    response = gson.toJson(spreadResponse);
-                } finally {
-                    
-                }
-    
-                exchange.sendResponseHeaders(200, response.getBytes().length);
-                try (OutputStream os = exchange.getResponseBody()) {
-                    os.write(response.getBytes());
-                }
-            }));
-    
-            server.start();
-    
+        @GetMapping("/Spread")
+        public SpreadResponse getSpread() {
+            SpreadResponse spreadResponse = new SpreadResponse();
+            lockSpread.readLock().lock();
             try {
-                Thread.sleep(TimeUnit.MINUTES.toMillis(executionTime));
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
+                spreadResponse.setSpread(spread);
+                spreadResponse.setTimestamp(String.valueOf(Instant.now().toEpochMilli()));
+            } finally {
+                lockSpread.readLock().unlock();
             }
-    
-            server.stop(0);
-        } catch (IOException e) {
-            e.printStackTrace();
+            return spreadResponse;
         }
     }
-
+    private static void scheduleShutdown(int executionTime) {
+        if (executionTime > 0) {
+            ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+            
+            scheduler.schedule(() -> {
+                System.out.println("Closing Java program");
+                System.exit(0); 
+            }, executionTime, TimeUnit.MINUTES);
+        }
+    }
     private static Path setupLogFile() {
         String workingDir = System.getProperty("user.dir");
         Path pathCurrent = Paths.get(workingDir).getParent();
@@ -115,7 +111,6 @@ public class Main {
     private static void processMessage(String message, Path logFile) {
         BookTicker ticker = gson.fromJson(message, BookTicker.class);
         double tempSpread = Double.parseDouble(ticker.a) - Double.parseDouble(ticker.b);
-        
         lockSpread.writeLock().lock();
         try {
             spread = tempSpread;
@@ -140,8 +135,24 @@ public class Main {
         String A; // best ask qty
     }
 
-    static class SpreadResponse {
-        double Spread;
-        String Timestamp;
+    public static class SpreadResponse {
+        private double spread;
+        private String timestamp;
+
+        public double getSpread() {
+            return spread;
+        }
+
+        public void setSpread(double spread) {
+            this.spread = spread;
+        }
+
+        public String getTimestamp() {
+            return timestamp;
+        }
+
+        public void setTimestamp(String timestamp) {
+            this.timestamp = timestamp;
+        }
     }
 }
